@@ -1,0 +1,65 @@
+
+import re
+from nltk.tokenize import word_tokenize
+
+def sepwords(text):
+    '''
+    Seperate the sentence to tokens
+    :param text:  Sentence
+    :return: Word Token
+    '''
+    return word_tokenize(text)
+
+
+def countwords(wordtokens):
+    '''
+
+    :param wordtokens: all the words within the document with repetitions
+    :param uniquewords: unique words within the document without repetitions
+    :return: uniquewords and the number of times the word occured
+    '''
+
+    uniquewords = set(wordtokens)
+    count_list = []
+    for i in uniquewords:
+        count = wordtokens.count(i)
+        count_list.append(count)
+    return uniquewords, count_list
+
+def flat_list(mylist):
+    flat_list = [item for sublist in mylist for item in sublist]
+    return flat_list
+
+def processfile(path):
+    '''
+    read the text file with lines of sentences
+    :param path: the path of the text file
+    :return: uniquewords and the number of times the word occured
+    '''
+    file = open(path)
+    lines = file.readlines()
+    count = 0
+    mydict = {}
+    mylist = []
+
+
+    for i in range(0, len(lines)):
+        line = lines[i]
+        line = line.strip()
+        pattern = r'[0-9]'
+        new_text = re.sub(pattern, '', line)
+        new_text = new_text.strip()
+        seperatewords = sepwords(new_text)
+        mylist.append(seperatewords)
+    flatlist = flat_list(mylist)
+    a = countwords(flatlist)
+    return a
+
+
+
+if __name__ == "__main__":
+    path = "semeval-2014-task6/train_data/commands.txt"
+    a = processfile(path)
+    print(len(a[0]))
+    print(a[1])
+    print(list(a[0]))
