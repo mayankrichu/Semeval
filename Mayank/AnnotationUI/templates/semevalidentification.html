@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SemevalAnnotation</title>
+</head>
+<body>
+<h4>The file name is {{ sequencenumber }}</h4>
+
+
+
+
+
+
+<p>
+    Colors represent
+    </br>
+    <span style="color: Green "> Action </span>
+
+    <span style="color: Red "> Colors </span>
+
+    <span style="color: Blue "> Trajector </span>
+
+    <span style="color: Grey "> Indicator </span>
+
+
+
+</p>
+<p>
+    Sentence ---->
+    {% for entity in entities %}
+     {% set outer_loop = loop %}
+    {% set colors = colors[outer_loop.index0] %}
+     <span style="color: {{ colors }}">{{ entity }} </span>
+    {% endfor %}
+</p>
+
+<div style="display: flex;">
+      <div style="display: flex; flex-direction: column; margin-right: 20px;">
+    {% for entity in entities %}
+     {% set outer_loop = loop %}
+    {% set colors = colors[outer_loop.index0] %}
+     <span style="color: {{ colors }}; margin: 1px">{{ entity }}--- {{outer_loop.index0}} </span>
+          {% endfor %}
+      </div>
+
+
+<div style="display: flex; flex-direction: column; margin-right: 20px;">
+    Entities :---
+    {% for entity in entities_json %}
+    {% set outer_loop = loop %}
+   <p style="margin: 5px;">{{ entity }} <b><sup>{{ outer_loop.index }}</sup></b></p>
+    {% endfor %}
+            </div>
+
+<div style="display: flex; flex-direction: column;">
+    Relations :---
+    {% for relation in relations_json %}
+     <p style="margin: 5px;">{{ relation }}</p>
+          {% endfor %}
+   </div>
+</div>
+
+
+
+<form action="/SemevalidentificationSubmit" method ="POST">
+<form method="POST">
+
+    <input type="hidden" id="sequencenumber" name="sequencenumber" value="{{ sequencenumber}}">
+    <h3>Is the information correct or incorrent. Reply with True or False</h3>
+    <input type="radio" name="options" id="option1" value="True", align="center"> True </input><br>
+    <input type="radio" name="options" id="option2" value="False" align ="center"> False </input><br>
+
+<input type="submit" value="Submit" class="btn" />
+      </form>
+</form>
+
+</body>
+</html>
