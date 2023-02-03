@@ -15,7 +15,7 @@ Flow of the program
 
 Verification of the annotated data
 
-Go to the AnnotationUI folder
+Go to the AnnotationUI folder inside Mayank folder
 
 1. Go to the variables.py and change the location of the respective variables based on your desired location.
 2. semeval_file_path ---- The output file from the above steps
