@@ -1,6 +1,6 @@
 # Semeval
 
-Annotatig the sentences into Action, Trajector, Color, indicators, relations:
+Annotating the sentences into Action, Trajector, Color, indicators, relations:
 
 1. get the file location for the "semeval-2014-task6/train_data/commands.txt".
 2. Replace the link in the program code in word2vec_spacy.py and indicator_identification.py
