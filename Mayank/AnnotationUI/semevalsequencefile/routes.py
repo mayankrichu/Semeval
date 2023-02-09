@@ -32,7 +32,7 @@ def SemevalsequencefileSubmit():
         entity = []
         df = pd.read_csv(semeval_file_path, index_col=0)
         df_row = df.loc[int(sequencenumber)]
-        for idx, word in enumerate(df_row['sentence'].split()):
+        for idx, word in enumerate(re.split("[,.\s]", df_row['sentence'])):
             try:
                 if word == df_row['1_Action']:
                     entity.append(word)
