@@ -27,7 +27,7 @@ def SemevalidentificationSubmit():
         entity = []
         df = pd.read_csv(semeval_file_path, index_col=0)
         df_row = df.loc[int(sequencenumber)]
-        for idx, word in enumerate(df_row['sentence'].split()):
+        for idx, word in enumerate(re.split("[,.\s]", df_row['sentence'])):
             word = word.lower()
             try:
                 first_indicator_words = df_row['1_indicator_words'].split()
