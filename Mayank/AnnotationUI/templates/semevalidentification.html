@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
+
     <meta charset="UTF-8">
     <title>SemevalAnnotation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
+
+<form action="/SemevalidentificationSubmit" method ="POST">
 <h4>The file name is {{ sequencenumber }}</h4>
 
 
@@ -45,35 +52,57 @@
       </div>
 
 
-<div style="display: flex; flex-direction: column; margin-right: 20px;">
-    Entities :---
-    {% for entity in entities_json %}
-    {% set outer_loop = loop %}
-   <p style="margin: 5px;">{{ entity }} <b><sup>{{ outer_loop.index }}</sup></b></p>
-    {% endfor %}
-            </div>
 
-<div style="display: flex; flex-direction: column;">
+<div style="display: flex; flex-direction: column; margin-right: 20px;">
+     Entities :---
+    <div class ="editor">
+    <div class="row-numbers"></div>
+      <textarea type="text" id="entities" name="entities" rows="10" cols= "50"> {{ entities_json[:-1] }}</textarea>
+        </div>
+
+</div>
+
+    <div style="display: flex; flex-direction: column;">
     Relations :---
-    {% for relation in relations_json %}
-     <p style="margin: 5px;">{{ relation }}</p>
-          {% endfor %}
+      <textarea type="text" id="relations" name="relations" rows="4" cols= "30"> {{ relations_json }}</textarea>
    </div>
+
 </div>
 
 
 
-<form action="/SemevalidentificationSubmit" method ="POST">
 <form method="POST">
 
     <input type="hidden" id="sequencenumber" name="sequencenumber" value="{{ sequencenumber}}">
-    <h3>Is the information correct or incorrent. Reply with True or False</h3>
+    <h3>Is the information correct or incorrect. Reply with True or False</h3>
     <input type="radio" name="options" id="option1" value="True", align="center"> True </input><br>
     <input type="radio" name="options" id="option2" value="False" align ="center"> False </input><br>
 
 <input type="submit" value="Submit" class="btn" />
       </form>
 </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+const textarea = document.getElementById("entities");
+const rowNumbers = document.querySelector(".row-numbers");
+
+function updateRowNumbers() {
+  const lines = textarea.value.split("\n");
+  const lineCount = lines.length;
+  let lineNumbers = "";
+  for (let i = 0; i <= lineCount; i++) {
+    lineNumbers += i + "\n";
+  }
+  rowNumbers.innerText = lineNumbers;
+}
+
+updateRowNumbers();
+</script>
+
 
 </body>
 </html>
+
+

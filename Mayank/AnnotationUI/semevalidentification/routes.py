@@ -2,6 +2,12 @@ from flask import Blueprint, render_template, request, jsonify, redirect, url_fo
 from Mayank.AnnotationUI.variables import semeval_file_path, annotated_file_path, True_annotated_file_path, False_annotated_file_path
 import json
 import pandas as pd
+import re
+from jinja2 import Template, Environment, meta, FileSystemLoader
+
+
+from Mayank.AnnotationUI.variables import  superscript_map, trans
+
 #semeval_file_path = "/Volumes/Mayank HDD/Fraunhofer Project/Semeval/Semeval2.csv"
 semevalidentification = Blueprint('semevalidentification', __name__)
 
@@ -18,6 +24,8 @@ def SemevalidentificationSubmit():
     #read the file
     if request.method == 'POST':
         option = request.form['options']
+        a = request.form['entities']
+        print(a)
         df = pd.read_csv(semeval_file_path, index_col=0)
         df = df.reset_index(drop=True)
 
@@ -80,18 +88,36 @@ def SemevalidentificationSubmit():
                 entity.append(word)
                 color.append("black")
 
-        print(entity)
-        print(color)
 
         df.at[sequencenumber, 'Accurate'] = option
         filepath = f"{annotated_file_path}{sequencenumber}.json"
         with open(filepath) as json_file:
             data = json.load(json_file)
+
+        entities_json = ""
+        relations_json = ""
+        for entity_temp in data['entities']:
+            entities_json += str(entity_temp) + "\n"
+        for relation_temp in data['relations']:
+            relations_json += str(relation_temp) + "\n"
+
         if option == "True":
-            with open(f"{True_annotated_file_path}{sequencenumber}.json", "w") as f:
-                json.dump(data, f)
+            with open(f"{True_annotated_file_path}{sequencenumber-1}.json", "w") as f:
+                corrected_entities = request.form['entities'].replace('\r\n', ',')
+                final_data = {
+                    'Sentence' : df_row['sentence'],
+                    'entities' : corrected_entities,
+                    'relations' : request.form['relations']
+
+                }
+                json.dump(final_data, f)
+
         if option == "False":
-            with open(f"{False_annotated_file_path}{sequencenumber}.json", "w") as f:
+            with open(f"{False_annotated_file_path}{sequencenumber-1}.json", "w") as f:
                 json.dump(data, f)
-    return render_template('semevalidentification.html', data = data, option = option, sequencenumber=sequencenumber, entities = entity, colors =color, sentence = df_row['sentence'].split(), entities_json = data['entities'], relations_json = data['relations'])
+
+
+    return render_template('semevalidentification.html', data = data, option = option, sequencenumber=sequencenumber, entities = entity, colors =color, entities_json = entities_json, relations_json = relations_json)
+
+
 

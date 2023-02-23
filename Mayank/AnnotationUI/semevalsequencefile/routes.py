@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, request, jsonify, redirect, url_fo
 import json
 import pandas as pd
 from Mayank.AnnotationUI.variables import semeval_file_path, annotated_file_path, True_annotated_file_path, False_annotated_file_path
+import re
+from Mayank.AnnotationUI.variables import  superscript_map, trans
+import string
 
 
 semevalsequencefile = Blueprint('semevalsequencefile', __name__)
@@ -17,7 +20,6 @@ colors = {
 @semevalsequencefile.route('/', methods=['GET', 'POST'])
 def Semevalsequencefile():
     #read the file
-    print("here")
     return render_template('semevalsequencefile.html')
 
 @semevalsequencefile.route('/SemevalsequencefileSubmit', methods =['POST'])
@@ -84,8 +86,13 @@ def SemevalsequencefileSubmit():
 
         with open(filepath) as json_file:
             data = json.load(json_file)
-        print(data)
-    return render_template('semevalidentification.html', data= data, entities_json = data['entities'], relations_json = data['relations'], sequencenumber=sequencenumber, entities = entity, colors =color, sentence = df_row['sentence'].split())
+
+
+        entities_json = ""
+        for entity_temp in data['entities']:
+            entities_json += str(entity_temp) + "\n"
+        print(entities_json)
+    return render_template('semevalidentification.html', data= data, entities_json = entities_json, relations_json = data['relations'], sequencenumber=sequencenumber, entities = entity, colors =color, sentence = df_row['sentence'].split(','))
 
 
 

@@ -1,0 +1,23 @@
+.editor {
+  display: flex;
+  flex-direction: row;
+}
+
+.row-numbers {
+  height: calc(1.2em * var(--rows));
+  padding-top: 7px;
+  padding-right: 5px;
+  line-height: 1.5em;
+  font-size: 14px;
+  color: #aaa;
+  text-align: right;
+  border-right: 1px solid #ddd;
+}
+
+textarea {
+  flex: 1;
+  border: none;
+  padding: 0.5em;
+  font-size: 14px;
+  line-height: 1.5em;
+}
