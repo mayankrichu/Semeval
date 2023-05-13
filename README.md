@@ -9,6 +9,7 @@ of the output file
 
 Flow of the program
 
+
 1. Run word2vec_spacy.py
 2. indicator_identification.py
 3. dftojson.py
@@ -25,5 +26,5 @@ Go to the AnnotationUI folder inside Mayank folder
 
 Run the run.py file to start
 
-![Semeval](https://github.com/mayankrichu/Semeval/assets/71438205/2f5b3960-b167-4081-bf79-6d171252d67d)
+![Semeval](https://github.com/mayankrichu/Semeval/assets/71438205/1a465126-18ec-4e57-95b3-d688d867da83)
 
