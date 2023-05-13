@@ -24,3 +24,6 @@ Go to the AnnotationUI folder inside Mayank folder
 5. False_annotated_file_path --- The folder for the incorrect annotated files
 
 Run the run.py file to start
+
+![Semeval](https://github.com/mayankrichu/Semeval/assets/71438205/2f5b3960-b167-4081-bf79-6d171252d67d)
+
