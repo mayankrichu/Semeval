@@ -1,4 +1,3 @@
-import numpy as np
 from classifywords import sepwords
 import re
 import pandas as pd
